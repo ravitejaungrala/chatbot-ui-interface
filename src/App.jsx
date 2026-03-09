@@ -2,128 +2,110 @@ import React, { useState } from 'react'
 import CardGrid from './components/CardGrid'
 
 function App() {
+  const projects = ['demo_v1', 'demo_v2', 'demo_v3'];
   const [project, setProject] = useState('demo_v1');
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isProjectOpen, setIsProjectOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
-  const [showExpandTooltip, setShowExpandTooltip] = useState(false);
-
-  // Auto-expand if the user starts typing
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
-    if (e.target.value.length > 0 && !isExpanded) {
-      setIsExpanded(true);
-    }
-  };
+  const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="app-container">
+    <div className="app-wrapper">
+      {/* Top Header */}
       <header>
-        <div className="project-selector">
-          <span className="project-label">PROJECT</span>
-          <div className="select-wrapper">
-            <select
-              value={project}
-              onChange={(e) => setProject(e.target.value)}
-            >
-              <option value="demo_v1">demo_v1</option>
-              <option value="demo_v2">demo_v2</option>
-              <option value="demo_v3">demo_v3</option>
-            </select>
-            <svg
-              className="select-chevron"
-              width="14" height="14" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"
-            >
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
+        <div className="header-actions">
+          <div className={`project-select-wrapper ${isProjectOpen ? 'active' : ''}`}>
+            <span className="project-label">Project:</span>
+            <div className="custom-select-container" onClick={() => setIsProjectOpen(!isProjectOpen)}>
+              <div className="current-project">
+                {project}
+              </div>
+              <div className="select-chevron">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="m6 9 6 6 6-6" />
+                </svg>
+              </div>
+
+              {isProjectOpen && (
+                <div className="project-dropdown-list">
+                  {projects.map((p) => (
+                    <div
+                      key={p}
+                      className={`project-option ${p === project ? 'selected' : ''}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setProject(p);
+                        setIsProjectOpen(false);
+                      }}
+                    >
+                      {p}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </header>
 
+      {/* Main Content Area */}
       <main>
-        <h1>Unlock predictive insights for your media spend</h1>
+        <div className="chat-container">
+          <div className="chat-welcome">
+            <h1>What can I <span style={{ color: '#ff4500' }}>help with?</span></h1>
+            <p>Predictive insights and media analysis at your fingertips.</p>
 
-        <div className="search-container">
-          <div className={`search-input-wrapper ${isExpanded ? 'expanded' : ''}`}>
-            <div className="search-top-row">
-              <svg
-                className="search-icon"
-                width="20" height="20" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-              >
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
+            <CardGrid />
+          </div>
+        </div>
+
+        {/* Capsule Input Bar Fixed at Bottom */}
+        <div className="input-wrapper">
+          <div className={`capsule-input-container ${isExpanded ? 'expanded' : ''}`}>
+            <div className="input-top-layer">
+              <div className="input-icon-left">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+              </div>
               <input
                 type="text"
                 placeholder="Try to use it"
                 value={inputValue}
-                onChange={handleInputChange}
-                onFocus={() => setIsExpanded(true)}
+                onChange={(e) => setInputValue(e.target.value)}
               />
-              <div
-                className="expand-button-container"
-                onMouseEnter={() => setShowExpandTooltip(true)}
-                onMouseLeave={() => setShowExpandTooltip(false)}
+              <button
+                className={`input-icon-right ${isExpanded ? 'active' : ''}`}
+                onClick={() => setIsExpanded(!isExpanded)}
+                data-tooltip="Expand"
+                title="Expand"
               >
-                <button
-                  className={`expand-button ${isExpanded ? 'active' : ''}`}
-                  onClick={() => setIsExpanded(!isExpanded)}
-                >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="4" y1="21" x2="4" y2="14"></line>
-                    <line x1="4" y1="10" x2="4" y2="3"></line>
-                    <line x1="12" y1="21" x2="12" y2="12"></line>
-                    <line x1="12" y1="8" x2="12" y2="3"></line>
-                    <line x1="20" y1="21" x2="20" y2="16"></line>
-                    <line x1="20" y1="12" x2="20" y2="3"></line>
-                    <line x1="1" y1="14" x2="7" y2="14"></line>
-                    <line x1="9" y1="8" x2="15" y2="8"></line>
-                    <line x1="17" y1="16" x2="23" y2="16"></line>
-                  </svg>
-                </button>
-                {showExpandTooltip && !isExpanded && (
-                  <div className="expand-tooltip">
-                    expand option
-                  </div>
-                )}
-              </div>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="4" y1="21" x2="4" y2="14"></line>
+                  <line x1="4" y1="10" x2="4" y2="3"></line>
+                  <line x1="12" y1="21" x2="12" y2="12"></line>
+                  <line x1="12" y1="8" x2="12" y2="3"></line>
+                  <line x1="20" y1="21" x2="20" y2="16"></line>
+                  <line x1="20" y1="12" x2="20" y2="3"></line>
+                  <line x1="1" y1="14" x2="7" y2="14"></line>
+                  <line x1="9" y1="8" x2="15" y2="8"></line>
+                  <line x1="17" y1="16" x2="23" y2="16"></line>
+                </svg>
+              </button>
             </div>
 
             {isExpanded && (
-              <div className="search-expanded-row">
-                <div className="action-pills-group">
-                  <button className="action-pill">
-                    <svg
-                      className="plus-icon"
-                      width="18" height="18" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-                    >
-                      <line x1="12" y1="5" x2="12" y2="19"></line>
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                    <span className="pill-text">Upload CSV/Excel</span>
+              <div className="input-expansion-drawer">
+                <div className="drawer-actions-left">
+                  <button className="drawer-btn" data-tooltip="Upload" title="Upload">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                   </button>
-                  <button className="action-pill voice-pill">
-                    <svg
-                      className="voice-icon"
-                      width="18" height="18" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"
-                    >
-                      <line className="bar-1" x1="12" y1="6" x2="12" y2="18"></line>
-                      <line className="bar-2" x1="7.5" y1="9" x2="7.5" y2="15"></line>
-                      <line className="bar-3" x1="16.5" y1="9" x2="16.5" y2="15"></line>
-                      <line className="bar-4" x1="3" y1="12" x2="3" y2="12.01"></line>
-                      <line className="bar-5" x1="21" y1="12" x2="21" y2="12.01"></line>
-                    </svg>
-                    <span className="pill-text">Use Voice Mode</span>
+                  <button className="drawer-btn" data-tooltip="Voice" title="Voice">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
                   </button>
                 </div>
-                <button className="send-button-expanded">
-                  <svg
-                    width="18" height="18" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-                  >
+                <button className="drawer-send-btn">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                     <line x1="22" y1="2" x2="11" y2="13"></line>
                     <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
                   </svg>
@@ -132,7 +114,6 @@ function App() {
             )}
           </div>
         </div>
-        <CardGrid />
       </main>
     </div>
   )

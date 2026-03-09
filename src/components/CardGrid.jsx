@@ -5,33 +5,33 @@ const CardGrid = () => {
     const cards = [
         {
             text: "Which channel should I increase my budget on based on the model?",
-            category: "MODEL INSIGHT",
-            bgColor: "#ffe8df"
+            category: "Model Insight",
+            accentColor: "#FF4D00"
         },
         {
             text: "What is the ROI of each media channel in my project?",
-            category: "MODEL INSIGHT",
-            bgColor: "#f1e5ff"
+            category: "Model Insight",
+            accentColor: "#8B5CF6"
         },
         {
             text: "Show me a breakdown of media spend by channel for the last 3 months",
-            category: "ANALYSIS",
-            bgColor: "#e5f0ff"
+            category: "Analysis",
+            accentColor: "#3B82F6"
         },
         {
             text: "Which channels are underperforming and where should I cut spend?",
-            category: "OPTIMIZATION",
-            bgColor: "#ffebee"
+            category: "Optimization",
+            accentColor: "#EF4444"
         },
         {
             text: "What were my top performing channels in the most recent weeks?",
-            category: "ANALYSIS",
-            bgColor: "#e8fdf2"
+            category: "Analysis",
+            accentColor: "#10B981"
         },
         {
             text: "Generate a revenue trend chart for the last 6 months",
-            category: "VISUALIZATION",
-            bgColor: "#fff4d3"
+            category: "Visualization",
+            accentColor: "#F59E0B"
         }
     ];
 
@@ -42,7 +42,7 @@ const CardGrid = () => {
                     key={index}
                     text={card.text}
                     category={card.category}
-                    bgColor={card.bgColor}
+                    accentColor={card.accentColor}
                 />
             ))}
         </div>
