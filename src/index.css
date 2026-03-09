@@ -195,8 +195,8 @@ main {
 }
 
 .chat-welcome {
-  margin-top: 6vh;
-  /* Moved up from 12vh */
+  margin-top: 3vh;
+  /* Moved up from 6vh */
   text-align: center;
   width: 100%;
 }
@@ -241,13 +241,13 @@ main {
   background: white;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  padding: 0.5rem 0.75rem;
+  padding: 0.4rem 0.6rem;
   /* Tighter padding */
   display: flex;
   flex-direction: column;
   justify-content: center;
   /* Center content vertically */
-  min-height: 55px;
+  min-height: 48px;
   /* Ultra-slim height */
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -285,8 +285,8 @@ main {
   /* Smaller font */
   font-weight: 500;
   color: var(--text-main);
-  line-height: 1.3;
-  margin-bottom: 0.5rem;
+  line-height: 1.25;
+  margin-bottom: 0.35rem;
   /* Tighter margin */
 }
 

@@ -6,7 +6,7 @@ function App() {
   const [project, setProject] = useState('demo_v1');
   const [isProjectOpen, setIsProjectOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
 
   return (
     <div className="app-wrapper">
@@ -73,6 +73,7 @@ function App() {
                 placeholder="Try to use it"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
+                onFocus={() => setIsExpanded(true)}
               />
               <button
                 className={`input-icon-right ${isExpanded ? 'active' : ''}`}
